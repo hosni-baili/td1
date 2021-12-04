@@ -9,6 +9,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,7 +26,7 @@ import com.example.TD1.DAO.SpecialiteRepository;
 import com.example.TD1.entities.Departement;
 import com.example.TD1.entities.Etudiants;
 import com.example.TD1.entities.Specialite;
-
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping(value="/etudiant/")
@@ -95,7 +96,7 @@ public class EtudiantsController {
 //		return etudiantsRepository.save(etudiant);
 //	}
 //	
-//	@DeleteMapping("/delete/{etudiantId}")
+//	@GetMapping("/delete/{etudiantId}")
 //	public void deleteEtudiant(@PathVariable Long etudiantId) {
 //		etudiantsRepository.deleteById(etudiantId);
 //	}
@@ -105,10 +106,10 @@ public class EtudiantsController {
 //		etudiantsRepository.deleteById(etudiantId);
 //	}
 	
-	@GetMapping("index")
+	@GetMapping("list")
 	public String index(Model model) {
 		model.addAttribute("etudiants",etudiantsRepository.findAll());
-		return "etudiant";
+		return "etudiant/etudiant";
 	}
 	
 	@GetMapping("delete/{etudiantId}")
@@ -120,14 +121,91 @@ public class EtudiantsController {
 	@GetMapping("add")
 	public String add(Model model) {
 		Etudiants etudiant=new Etudiants();
+		List<Departement> departements= departementRepository.findAll();
+		List<Specialite> specialites= specialiteRepository.findAll();
+		
 		model.addAttribute("etudiant",etudiant);
-		return "addEtudiant";
+		model.addAttribute("departements",departements);
+		model.addAttribute("specialites",specialites);
+		
+		return "etudiant/addEtudiant";
 	}
 	
-//	@PostMapping("add")
-//	public String add(Model model) {
-//		Etudiants etudiant=new Etudiants();
-//		model.addAttribute("etudiant",etudiant);
-//		return "addEtudiant";
+	@PostMapping("add")
+	public String addetu(@Valid Etudiants etudiant,
+			@RequestParam(name = "departementId", required = false) Long idDepartement,BindingResult result,
+			@RequestParam(name = "specialiteId", required = false) Long idSpecialite,
+			Model model) {
+		if (result.hasErrors()) {
+			List<Departement> departements= departementRepository.findAll();
+			List<Specialite> specialites= specialiteRepository.findAll();
+			model.addAttribute("specialites",specialites);
+			model.addAttribute("departements",departements);
+			return "etudiant/addEtudiant";
+		}
+
+		Departement departement = departementRepository.findById(idDepartement)
+				.orElseThrow(() -> new IllegalArgumentException("Invalid departement:" + idDepartement));
+		etudiant.setDepartement(departement);
+		
+		Specialite specialite = specialiteRepository.findById(idSpecialite)
+				.orElseThrow(() -> new IllegalArgumentException("Invalid specialite:" + idSpecialite));
+		etudiant.setSpecialite(specialite);;
+
+		etudiantsRepository.save(etudiant);
+		
+		return "redirect:list";
+	}
+	
+	
+	@GetMapping("edit/{idEtudiant}")
+	public String etudForm(@PathVariable("idEtudiant") long idEtudiant, Model model) {
+		Etudiants etudiant = etudiantsRepository.findById(idEtudiant)
+				.orElseThrow(() -> new IllegalArgumentException("Invalid etudiant id:" + idEtudiant));
+
+		List<Departement> departements= departementRepository.findAll();
+		List<Specialite> specialites= specialiteRepository.findAll();
+		
+		model.addAttribute("etudiant",etudiant);
+		model.addAttribute("specialites",specialites);
+		model.addAttribute("departements",departements);
+		model.addAttribute("specialiteId",etudiant.getSpecialite().getIdSpecialite());
+		model.addAttribute("departementId",etudiant.getDepartement().getIdDepartement());
+
+
+		return "etudiant/addEtudiant";
+	}
+
+	@PostMapping("edit")
+	public String updateEtudiant(@Valid Etudiants etudiant,
+			@RequestParam(name = "departementId", required = false) Long idDepartement,BindingResult result,
+			@RequestParam(name = "specialiteId", required = false) Long idSpecialite,
+			Model model) {
+		if (result.hasErrors()) {
+			List<Departement> departements= departementRepository.findAll();
+			List<Specialite> specialites= specialiteRepository.findAll();
+			model.addAttribute("specialites",specialites);
+			model.addAttribute("departements",departements);
+			return "etudiant/addEtudiant";
+		}
+		
+		Departement departement = departementRepository.findById(idDepartement)
+				.orElseThrow(() -> new IllegalArgumentException("Invalid departement:" + idDepartement));
+		etudiant.setDepartement(departement);
+		
+		Specialite specialite = specialiteRepository.findById(idSpecialite)
+				.orElseThrow(() -> new IllegalArgumentException("Invalid specialite:" + idSpecialite));
+		etudiant.setSpecialite(specialite);;
+
+		etudiantsRepository.save(etudiant);
+		
+		return "redirect:list";
+	}
+	
+//	@GetMapping("edit")
+//	public String edit() {
+//		
+//		
+//		return "etudiant/addEtudiant";
 //	}
 }
