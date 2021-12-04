@@ -112,12 +112,6 @@ public class EtudiantsController {
 		return "etudiant/etudiant";
 	}
 	
-	@GetMapping("delete/{etudiantId}")
-	public String delete(Model model,@PathVariable Long etudiantId) {
-		etudiantsRepository.deleteById(etudiantId);
-		return "redirect:../index";
-	}
-	
 	@GetMapping("add")
 	public String add(Model model) {
 		Etudiants etudiant=new Etudiants();
@@ -202,10 +196,12 @@ public class EtudiantsController {
 		return "redirect:list";
 	}
 	
-//	@GetMapping("edit")
-//	public String edit() {
-//		
-//		
-//		return "etudiant/addEtudiant";
-//	}
+	@GetMapping("delete/{id}")
+	public String delete(@PathVariable("id") Long id, Model model) {
+		Etudiants etudiant = etudiantsRepository.findById(id)
+				.orElseThrow(() -> new IllegalArgumentException("Invalid etudiant Id:" + id));
+		
+		etudiantsRepository.delete(etudiant);
+		return "redirect:../list";
+	}
 }
