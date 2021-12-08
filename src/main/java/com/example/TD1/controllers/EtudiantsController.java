@@ -107,7 +107,7 @@ public class EtudiantsController {
 //	}
 	
 	@GetMapping("list")
-	public String index(Model model) {
+	public String listEtudiant(Model model) {
 		model.addAttribute("etudiants",etudiantsRepository.findAll());
 		return "etudiant/etudiant";
 	}
@@ -144,7 +144,9 @@ public class EtudiantsController {
 		
 		Specialite specialite = specialiteRepository.findById(idSpecialite)
 				.orElseThrow(() -> new IllegalArgumentException("Invalid specialite:" + idSpecialite));
-		etudiant.setSpecialite(specialite);;
+		etudiant.setSpecialite(specialite);
+		
+		System.out.println(etudiant.getDateEntree());
 
 		etudiantsRepository.save(etudiant);
 		
@@ -167,7 +169,7 @@ public class EtudiantsController {
 		model.addAttribute("departementId",etudiant.getDepartement().getIdDepartement());
 
 
-		return "etudiant/addEtudiant";
+		return "etudiant/editEtudiant";
 	}
 
 	@PostMapping("edit")

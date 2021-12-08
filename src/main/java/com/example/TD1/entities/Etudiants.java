@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +30,7 @@ public class Etudiants {
 	
 	private int niveau;
 	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date dateEntree;
 	
 	private float moyenne;

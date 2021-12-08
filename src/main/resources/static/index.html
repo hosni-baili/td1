@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>List des etudiants</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+
+<div style="margin-bottom:2%;text-align: center">
+<div class="btn-group" style="margin-block: 2%;width: 13%;">
+<button type="button" class="btn btn-primary">
+<a th:href="@{}" class="dropdown-item" href="">Acceuil</a>
+</button>
+</div >
+
+<div class="btn-group">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    Gestion-Depart
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <a th:href="@{/departement/list}" class="dropdown-item" href="departement/list">Consulter</a>
+    <a th:href="@{/departement/add}" class="dropdown-item" href="departement/add">Ajouter</a>
+  </div>
+</div>
+
+<div class="btn-group">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Gestion-Special
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <a th:href="@{/specialite/list}" class="dropdown-item" href="specialite/list">Consulter</a>
+    <a th:href="@{/specialite/add}" class="dropdown-item" href="specialite/add">Ajouter</a>
+  </div>
+</div>
+
+<div class="btn-group">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Gestion-Etudiants
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <a th:href="@{/etudiant/list}" class="dropdown-item" href="etudiant/list">Consulter</a>
+    <a th:href="@{/etudiant/add}" class="dropdown-item" href="etudiant/add">Ajouter</a>
+  </div>
+</div>
+</div>
+<div>
+<h2 align="center">Bienvenue dans notre site</h2 >
+</div>
+
+</body>
+</html>

@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="ISO-8859-1">
-	<title>Ajout etudiant</title>
+	<title>Ajout specialite</title>
 	<script src="https://kit.fontawesome.com/45e38e596f.js" crossorigin="anonymous"></script>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -61,70 +61,19 @@
 		</div>
 	</div>
 
-	<h2 align="center">Ajouter un etudiant</h2>
-
+	<h2 align="center">Ajouter une specialite</h2>
 	<div style="width: 70%; margin-left: 15%;margin-top: 3%;">
-		<form action="#" th:action="@{/etudiant/add}" th:object="${etudiant}" method="post">
+		<form action="#" th:action="@{/specialite/add}" th:object="${specialite}" method="post">
+		<div class="mb-3">
+			<label class="col-form-label">Nom specialite</label>
+			<input type="text" th:field="${specialite.libelleSpecialite}" class="form-control" id="libelleSpecialite" placeholder="nom Departement" />
+			<span th:if="${#fields.hasErrors('libelleSpecialite')}" th:errors="*{libelleSpecialite}" class="text-danger">verifier nom specialite</span>
+		</div>
 
-
-			<div class="mb-3">
-				<label class="col-form-label">Nom</label>
-				<input type="text" th:field="${etudiant.nomE}" class="form-control" id="nom" placeholder="nom" />
-				<span th:if="${#fields.hasErrors('nomE')}" th:errors="*{nomE}" class="text-danger">verifier nom</span>
-			</div>
-			<div class="mb-3">
-				<label for="niveau" class="col-form-label">Niveau</label>
-				<input type="number" th:field="${etudiant.niveau}" class="form-control" id="niveau"
-					placeholder="niveau" />
-				<span th:if="${#fields.hasErrors('niveau')}" th:errors="*{niveau}" class="text-danger">verifier
-					niveau</span>
-			</div>
-			<div class="mb-3">
-				<label for="dateEntree" class="col-form-label">date Entree</label>
-				<input type="date" th:field="${etudiant.dateEntree}" class="form-control" id="dateEntree"
-					placeholder="dateE ntree" />
-				<span th:if="${#fields.hasErrors('dateEntree')}" th:errors="*{dateEntree}" class="text-danger">verifier
-					la
-					date d'entree'</span>
-			</div>
-			<div class="mb-3 form-check">
-				<label for="moyenne" class="col-form-label">Moyenne</label>
-				<input type="number" step="0.01" th:field="${etudiant.moyenne}" class="form-control" id="moyenne"
-					placeholder="moyenne" />
-				<span th:if="${#fields.hasErrors('moyenne')}" th:errors="*{moyenne}" class="text-danger">verifier
-					niveau</span>
-			</div>
-
-			<div class="mb-3">
-				<label for="deprtement" class="form-label">Departement</label>
-				<select name="departementId" class="form-control">
-					<option disable>-select departement-</option>
-					<option th:each="dep: ${departements}" th:value="${dep.idDepartement}"
-						th:text="${dep.nomDepartement}" />
-				</select>
-			</div>
-
-			<div class="mb-3">
-				<label for="deprtement" class="form-label">Specialite</label>
-				<select name="specialiteId" class="form-control">
-					<option disable>-select specialite-</option>
-					<option th:each="spe: ${specialites}" th:value="${spe.idSpecialite}"
-						th:text="${spe.libelleSpecialite}" />
-				</select>
-			</div>
-
-			<button type="submit" class="btn btn-success" style="margin-left: 39%; width: 20%;">Ajouter</button>
-		</form>
-	</div>
-
-
+		<button type="submit" class="btn btn-success" style="margin-left: 39%; width: 20%;">Ajouter</button>
+	</form>
+	</div >
 
 </body>
 
 </html>
-
-
-
-
-
-
